@@ -1,0 +1,439 @@
+/* ---------- GLOBAL ---------- */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f5f7fb;
+  color: #111827;
+}
+
+/* ---------- NAVBAR ---------- */
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 60px;
+  background: #111827;
+}
+
+.navbar h2 {
+  color: white;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+}
+
+.connect-btn {
+  background: #4f46e5;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.connect-btn:hover {
+  background: #4338ca;
+}
+
+.wallet-box {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.disconnect-btn {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+/* ---------- HERO ---------- */
+
+.hero {
+  text-align: center;
+  padding: 120px 20px;
+  background: linear-gradient(
+    135deg,
+    #f5f7fb,
+    #eef2ff
+  );
+}
+
+.hero h1 {
+  font-size: 55px;
+  margin-bottom: 20px;
+}
+
+.hero p {
+  font-size: 20px;
+  color: gray;
+  margin-bottom: 30px;
+}
+
+.explore-btn {
+  background: #4f46e5;
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.explore-btn:hover {
+  background: #4338ca;
+}
+
+/* ---------- STATS ---------- */
+
+.stats-section {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-bottom: 60px;
+  flex-wrap: wrap;
+}
+
+.stat-box {
+  background: white;
+  padding: 25px;
+  border-radius: 15px;
+  min-width: 180px;
+  text-align: center;
+  box-shadow: 0 0 15px rgba(0,0,0,0.08);
+}
+
+/* ---------- SEARCH ---------- */
+
+.search-section {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 25px;
+}
+
+.search-section input {
+  width: 400px;
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+}
+
+/* ---------- CATEGORY ---------- */
+
+.category-section {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+
+.category-section button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+  background: #4f46e5;
+  color: white;
+  cursor: pointer;
+}
+
+/* ---------- TITLES ---------- */
+
+.section-title {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 32px;
+}
+
+/* ---------- NFT CARDS ---------- */
+
+.cards-section {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  padding: 20px;
+  margin-bottom: 80px;
+}
+
+.nft-card,
+.owned-card {
+  width: 300px;
+  padding: 15px;
+  border-radius: 15px;
+  background: white;
+  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+  transition: 0.3s;
+}
+
+.nft-card {
+  cursor: pointer;
+}
+
+.nft-card:hover,
+.owned-card:hover {
+  transform: translateY(-10px);
+}
+
+.nft-card img,
+.owned-card img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.nft-card img {
+  height: 250px;
+  object-fit: cover;
+}
+
+.card-content {
+  padding-top: 15px;
+}
+
+.nft-card h3,
+.owned-card h3 {
+  margin-top: 15px;
+}
+
+.creator {
+  color: gray;
+  margin-top: 8px;
+}
+
+.price {
+  font-weight: bold;
+  margin-top: 10px;
+  color: #4f46e5;
+}
+
+.buy-btn,
+.owned-card button {
+  margin-top: 12px;
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: #4f46e5;
+  color: white;
+  cursor: pointer;
+}
+
+.buy-btn:hover,
+.owned-card button:hover {
+  background: #4338ca;
+}
+
+/* ---------- HEART ---------- */
+
+.heart {
+  font-size: 24px;
+  cursor: pointer;
+  text-align: right;
+  padding: 10px;
+}
+
+.heart:hover {
+  transform: scale(1.1);
+}
+
+/* ---------- MINT PAGE ---------- */
+
+.mint-container {
+  max-width: 700px;
+  margin: 50px auto;
+  padding: 30px;
+}
+
+.mint-container h1 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.mint-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.mint-form input,
+.mint-form textarea {
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+.mint-form button {
+  background: #4f46e5;
+  color: white;
+  border: none;
+  padding: 15px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.mint-form button:hover {
+  background: #4338ca;
+}
+
+.mint-form button:disabled,
+.buy-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* ---------- MY NFTS ---------- */
+
+.mynfts-container {
+  padding: 50px;
+}
+
+.mynfts-container h1 {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.nfts-grid {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+/* ---------- EMPTY STATE ---------- */
+
+.empty-box {
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.empty-box p {
+  margin-top: 15px;
+  color: gray;
+}
+
+/* ---------- NFT DETAILS ---------- */
+
+.details-container {
+  max-width: 1100px;
+  margin: 60px auto;
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+  padding: 20px;
+}
+
+.details-image {
+  width: 450px;
+  border-radius: 20px;
+}
+
+.details-content {
+  flex: 1;
+}
+
+.details-content h1,
+.details-content h2,
+.details-content h3,
+.details-content p {
+  margin-bottom: 20px;
+}
+
+/* ---------- LOADER ---------- */
+
+.loader {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #ddd;
+  border-top: 5px solid #4f46e5;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 60px auto;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* ---------- FOOTER ---------- */
+
+.footer {
+  margin-top: 80px;
+  padding: 30px;
+  text-align: center;
+  background: #111827;
+  color: white;
+}
+
+/* ---------- RESPONSIVE ---------- */
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .wallet-box {
+    flex-direction: column;
+  }
+
+  .hero {
+    padding: 80px 20px;
+  }
+
+  .hero h1 {
+    font-size: 36px;
+  }
+
+  .hero p {
+    font-size: 18px;
+  }
+
+  .cards-section,
+  .nfts-grid {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .nft-card,
+  .owned-card {
+    width: 90%;
+    max-width: 350px;
+  }
+
+  .search-section input {
+    width: 90%;
+  }
+
+  .details-container {
+    flex-direction: column;
+  }
+
+  .details-image {
+    width: 100%;
+  }
+}
