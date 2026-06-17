@@ -1,16 +1,142 @@
-# React + Vite
+# 🚀 Nexora NFT Marketplace
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A decentralized NFT Marketplace built with React, Solidity, Ethers.js and MetaMask on Sepolia Testnet.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🌟 Features
 
-## React Compiler
+- 🔐 Connect Wallet using MetaMask
+- 🎨 Mint NFTs on Sepolia Testnet
+- 📁 View Owned NFTs
+- 🏷️ List NFTs For Sale
+- 💰 Buy NFTs
+- 🔄 Real Blockchain Ownership Transfer
+- 📱 Fully Responsive Design (Mobile + Desktop)
+- ⚡ Real Web3 Integration with Smart Contracts
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 🛠️ Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Frontend
+- React.js
+- Vite
+- CSS3
+
+### Blockchain
+- Solidity
+- Ethers.js
+- MetaMask
+- Sepolia Testnet
+
+---
+
+## 📂 Project Structure
+
+```text
+nexora-nft-marketplace
+├── contracts
+│   └── NFTMarketplace.sol
+├── Screensots
+├── public
+├── src
+│   ├── assets
+│   ├── components
+│   ├── data
+│   ├── pages
+│   ├── services
+│   └── utils
+├── package.json
+├── package-lock.json
+├── vite.config.js
+├── index.html
+└── README.md
+```
+
+---
+
+## 📸 Project Screenshots
+
+### Home Page
+![Home](./Screensots/Home%20page.png)
+
+### Mint NFT Page
+![Mint NFT](./Screensots/Mint%20NFT%20page.png)
+
+### My NFT Collection
+![My NFTs](./Screensots/MyNFT%20collection.png)
+
+### Trending NFTs
+![Trending NFTs](./Screensots/Tranding%20NFTs.png)
+
+### Successful Transaction
+![Success](./Screensots/1%20st%20sucessfull.png)
+
+### Mobile View
+![Mobile](./Screensots/on%20Mobile.jpg)
+
+---
+
+## ⚙️ Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/poojagehlot41/nexora-nft-marketplace.git
+```
+
+Go inside the project:
+
+```bash
+cd nexora-nft-marketplace
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run locally:
+
+```bash
+npm run dev
+```
+
+---
+
+## 🔗 Network
+
+- Ethereum Sepolia Testnet
+- MetaMask Wallet Integration
+
+---
+
+## ✨ Key Functionalities
+
+✔ Connect Wallet  
+✔ Mint NFT  
+✔ View Owned NFTs  
+✔ List NFT For Sale  
+✔ Buy NFT  
+✔ Ownership Transfer  
+✔ Responsive UI  
+✔ Smart Contract Integration
+
+---
+
+## 👩‍💻 Author
+
+**Pooja Gehlot**
+
+GitHub:
+https://github.com/poojagehlot41
+
+---
+
+## ❤️ Final Project
+
+Final Project submitted for the **EtherAuthority Web3 Internship Program**.
+
+Built with ❤️ using React, Solidity and Web3 technologies.
