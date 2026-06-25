@@ -60,14 +60,14 @@ function NFTCard({ nft }) {
       await tx.wait();
 
       alert(
-        `NFT Purchased Successfully 🚀
-Ownership has been transferred.`
+      `NFT Purchased Successfully 🚀
+       NFT ownership transferred to your wallet.`
       );
 
       window.location.reload();
     } catch (error) {
       console.log(error);
-      alert("Purchase Failed");
+      alert("Purchase Failed. Please check wallet balance and network.");
     }
 
     setBuying(false);
@@ -118,8 +118,11 @@ Ownership has been transferred.`
         </p>
 
         <p className="price">
-          {nft.price} ETH
-        </p>
+          {nft.price}
+          {!String(nft.price).includes("ETH")
+          ? " ETH"
+          : ""}
+       </p>
 
         {nft.tokenId ? (
           <button

@@ -7,11 +7,24 @@ function Navbar({
 }) {
   return (
     <nav className="navbar">
-      <h2>Nexora NFT</h2>
+      <h2>
+        Nexora NFT
+        <br />
+        <span
+          style={{
+            fontSize: "14px",
+            color: "#a5b4fc",
+          }}
+        >
+          Powered by EtherAuthority
+        </span>
+      </h2>
 
       <div className="nav-links">
         <Link to="/">Home</Link>
-        <Link to="/mint">Mint NFT</Link>
+        <Link to="/mint">
+          Mint NFT
+        </Link>
         <Link to="/my-nfts">
           My NFTs
         </Link>

@@ -42,16 +42,20 @@ function MintNFT() {
       const network =
         await provider.getNetwork();
 
-      if (
-        Number(network.chainId) !==
-        11155111
-      ) {
-        alert(
-          "Please switch MetaMask to Sepolia Network."
-        );
-        setLoading(false);
-        return;
-      }
+     const chainId =
+    Number(network.chainId);
+
+    if (
+      chainId !== 11155111 &&
+      chainId !== 34
+     ){
+   alert(
+      "Please switch MetaMask to Sepolia or SCAI Mainnet."
+    );
+
+    setLoading(false);
+    return;
+    }
 
       const signer =
         await provider.getSigner();
@@ -63,12 +67,13 @@ function MintNFT() {
           signer
         );
 
-      const metadata = {
+     const metadata = {
         name,
         image,
         description,
-        price,
-      };
+        price:
+      String(price),
+     };
 
       const tokenURI =
         JSON.stringify(metadata);
@@ -86,7 +91,7 @@ function MintNFT() {
 
       alert(
         `NFT Minted Successfully 🚀
-Token has been added to blockchain.`
+         Token has been added to blockchain.`
       );
 
       setName("");
@@ -95,7 +100,7 @@ Token has been added to blockchain.`
       setDescription("");
     } catch (error) {
       console.log(error);
-      alert("Mint failed.");
+      alert( "Mint failed. Please check wallet connection and network.");
     }
 
     setLoading(false);

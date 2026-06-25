@@ -65,8 +65,21 @@ function Home() {
             const tokenURI =
               await contract.tokenURI(i);
 
-            const metadata =
-              JSON.parse(tokenURI);
+            let metadata;
+
+            try {
+            metadata =
+            JSON.parse(tokenURI);
+          } catch {
+            metadata = {
+            name: `NFT #${i}`,
+            description:
+           "Blockchain NFT",
+           image:
+           "https://via.placeholder.com/300",
+           price: "0",
+          };
+         }
 
             data.push({
               tokenId: i,
@@ -245,14 +258,6 @@ function Home() {
           )
         )}
       </div>
-
-      <footer className="footer">
-        <p>
-          © 2026 Nexora NFT
-          Marketplace | Built by
-          Pooja
-        </p>
-      </footer>
     </>
   );
 }

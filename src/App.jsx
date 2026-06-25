@@ -21,59 +21,83 @@ function App() {
     }
   }, []);
 
-  const checkWalletConnection = async () => {
-    try {
-      if (!window.ethereum) return;
+  const checkWalletConnection =
+    async () => {
+      try {
+        if (!window.ethereum)
+          return;
 
-      const accounts =
-        await window.ethereum.request({
-          method: "eth_accounts",
-        });
+        const accounts =
+          await window.ethereum.request(
+            {
+              method:
+                "eth_accounts",
+            }
+          );
 
-      if (accounts.length > 0) {
-        setWalletAddress(accounts[0]);
+        if (
+          accounts.length > 0
+        ) {
+          setWalletAddress(
+            accounts[0]
+          );
+        }
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+    };
 
-  const connectWallet = async () => {
-    try {
-      if (!window.ethereum) {
-        alert("Install MetaMask");
-        return;
+  const connectWallet =
+    async () => {
+      try {
+        if (
+          !window.ethereum
+        ) {
+          alert(
+            "Install MetaMask"
+          );
+          return;
+        }
+
+        const accounts =
+          await window.ethereum.request(
+            {
+              method:
+                "eth_requestAccounts",
+            }
+          );
+
+        setWalletAddress(
+          accounts[0]
+        );
+
+        localStorage.setItem(
+          "walletConnected",
+          "true"
+        );
+      } catch (error) {
+        console.log(error);
       }
+    };
 
-      const accounts =
-        await window.ethereum.request({
-          method: "eth_requestAccounts",
-        });
+  const disconnectWallet =
+    () => {
+      setWalletAddress("");
 
-      setWalletAddress(accounts[0]);
-
-      localStorage.setItem(
-        "walletConnected",
-        "true"
+      localStorage.removeItem(
+        "walletConnected"
       );
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const disconnectWallet = () => {
-    setWalletAddress("");
-
-    localStorage.removeItem(
-      "walletConnected"
-    );
-  };
+    };
 
   return (
     <>
       <Navbar
-        walletAddress={walletAddress}
-        connectWallet={connectWallet}
+        walletAddress={
+          walletAddress
+        }
+        connectWallet={
+          connectWallet
+        }
         disconnectWallet={
           disconnectWallet
         }
@@ -92,14 +116,29 @@ function App() {
 
         <Route
           path="/my-nfts"
-          element={<MyNFTs />}
+          element={
+            <MyNFTs />
+          }
         />
 
         <Route
           path="/nft-details"
-          element={<NFTDetails />}
+          element={
+            <NFTDetails />
+          }
         />
       </Routes>
+
+    <footer className="footer">
+      <h3>Nexora NFT</h3>
+
+    <p>Powered by EtherAuthority</p>
+
+    <p>
+      © 2026 Nexora NFT Marketplace |
+      Built by Pooja
+  </p>
+  </footer>
     </>
   );
 }

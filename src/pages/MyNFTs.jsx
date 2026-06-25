@@ -57,17 +57,54 @@ function MyNFTs() {
             const tokenURI =
               await contract.tokenURI(i);
 
-            const metadata =
-              JSON.parse(tokenURI);
+            let metadata;
+
+            try {
+              metadata =
+                JSON.parse(tokenURI);
+            } catch {
+              metadata = {
+                name: `NFT #${i}`,
+                description:
+                  "Minted NFT",
+                image:
+                  "https://via.placeholder.com/300",
+                price: "0",
+              };
+            }
+
+            let listing;
+
+            try {
+              listing =
+                await contract.getListing(
+                  i
+                );
+            } catch {
+              listing = null;
+            }
 
             nftArray.push({
               tokenId: i,
-              listed: false,
+              listed:
+                listing &&
+                listing[1] !==
+                  ethers.ZeroAddress &&
+                !listing[3],
+              listedPrice:
+                listing
+                  ? ethers.formatEther(
+                      listing[2]
+                    )
+                  : null,
               ...metadata,
             });
           }
         } catch (error) {
-          console.log(error);
+          console.error(
+            `Error loading NFT ${i}:`,
+            error
+          );
         }
       }
 
@@ -112,10 +149,6 @@ function MyNFTs() {
             priceInWei
           );
 
-        alert(
-          "Confirm transaction in MetaMask"
-        );
-
         await tx.wait();
 
         alert(
@@ -123,17 +156,7 @@ function MyNFTs() {
 NFT is now available in marketplace.`
         );
 
-        setMyNFTs((prev) =>
-          prev.map((nft) =>
-            nft.tokenId === tokenId
-              ? {
-                  ...nft,
-                  listed: true,
-                  listedPrice: price,
-                }
-              : nft
-          )
-        );
+        fetchNFTs();
       } catch (error) {
         console.log(error);
         alert(
@@ -170,9 +193,7 @@ NFT is now available in marketplace.`
               <h3>{nft.name}</h3>
 
               <p>
-                Price:
-                {" "}
-                {nft.price} ETH
+                Price: {nft.price} ETH
               </p>
 
               <p>
@@ -180,18 +201,13 @@ NFT is now available in marketplace.`
               </p>
 
               <p>
-                Token #
-                {nft.tokenId}
+                Token #{nft.tokenId}
               </p>
 
               {nft.listed ? (
                 <button>
-                  Listed For Sale
-                  {" "}
-                  (
-                  {nft.listedPrice}
-                  {" "}
-                  ETH)
+                  Listed For Sale (
+                  {nft.listedPrice} ETH)
                 </button>
               ) : (
                 <button
