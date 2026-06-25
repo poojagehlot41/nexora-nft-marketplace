@@ -1,231 +1,51 @@
-import { useEffect, useState } from "react";
-import { ethers } from "ethers";
-import { CONTRACT_ADDRESS } from "../utils/constants";
-import { CONTRACT_ABI } from "../utils/contractABI";
+import React from "react";
+import NFTCard from "../components/NFTCard";
 
-function MyNFTs() {
-  const [myNFTs, setMyNFTs] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetchNFTs();
-  }, []);
-
-  const fetchNFTs = async () => {
-    try {
-      if (!window.ethereum) {
-        setLoading(false);
-        return;
-      }
-
-      const provider =
-        new ethers.BrowserProvider(
-          window.ethereum
-        );
-
-      const signer =
-        await provider.getSigner();
-
-      const userAddress =
-        await signer.getAddress();
-
-      const contract =
-        new ethers.Contract(
-          CONTRACT_ADDRESS,
-          CONTRACT_ABI,
-          signer
-        );
-
-      const total =
-        await contract.totalNFTsMinted();
-
-      const nftArray = [];
-
-      for (
-        let i = 1;
-        i <= Number(total);
-        i++
-      ) {
-        try {
-          const owner =
-            await contract.ownerOf(i);
-
-          if (
-            owner.toLowerCase() ===
-            userAddress.toLowerCase()
-          ) {
-            const tokenURI =
-              await contract.tokenURI(i);
-
-            let metadata;
-
-            try {
-              metadata =
-                JSON.parse(tokenURI);
-            } catch {
-              metadata = {
-                name: `NFT #${i}`,
-                description:
-                  "Minted NFT",
-                image:
-                  "https://via.placeholder.com/300",
-                price: "0",
-              };
-            }
-
-            let listing;
-
-            try {
-              listing =
-                await contract.getListing(
-                  i
-                );
-            } catch {
-              listing = null;
-            }
-
-            nftArray.push({
-              tokenId: i,
-              listed:
-                listing &&
-                listing[1] !==
-                  ethers.ZeroAddress &&
-                !listing[3],
-              listedPrice:
-                listing
-                  ? ethers.formatEther(
-                      listing[2]
-                    )
-                  : null,
-              ...metadata,
-            });
-          }
-        } catch (error) {
-          console.error(
-            `Error loading NFT ${i}:`,
-            error
-          );
-        }
-      }
-
-      setMyNFTs(nftArray);
-    } catch (error) {
-      console.log(error);
-    }
-
-    setLoading(false);
-  };
-
-  const listNFTForSale =
-    async (tokenId) => {
-      try {
-        const price = prompt(
-          "Enter Price in ETH"
-        );
-
-        if (!price) return;
-
-        const provider =
-          new ethers.BrowserProvider(
-            window.ethereum
-          );
-
-        const signer =
-          await provider.getSigner();
-
-        const contract =
-          new ethers.Contract(
-            CONTRACT_ADDRESS,
-            CONTRACT_ABI,
-            signer
-          );
-
-        const priceInWei =
-          ethers.parseEther(price);
-
-        const tx =
-          await contract.listNFT(
-            tokenId,
-            priceInWei
-          );
-
-        await tx.wait();
-
-        alert(
-          `NFT Listed Successfully 🚀
-NFT is now available in marketplace.`
-        );
-
-        fetchNFTs();
-      } catch (error) {
-        console.log(error);
-        alert(
-          "Listing Failed"
-        );
-      }
-    };
-
+export default function MyNFTs({ myNfts = [], loading = false }) {
   return (
-    <div className="mynfts-container">
-      <h1>My NFT Collection</h1>
+    <div className="container" style={{ minHeight: "80vh", paddingBottom: "4rem" }}>
+      
+      {/* Centered Header */}
+      <div style={{ textAlign: "center", marginTop: "3rem", marginBottom: "3rem" }}>
+        <h1 style={{ fontSize: "2.8rem", fontWeight: "800", color: "#0f172a", marginBottom: "0.5rem" }}>
+          My Collections
+        </h1>
+        <p style={{ color: "#64748b", fontSize: "1.1rem" }}>
+          View and manage all the unique digital masterpieces you own.
+        </p>
+      </div>
 
+      {/* Grid or Empty State Dynamic Check */}
       {loading ? (
-        <div className="loader"></div>
-      ) : myNFTs.length === 0 ? (
-        <div className="empty-box">
-          <h2>No NFTs Found</h2>
-          <p>
-            Mint your first NFT 🚀
-          </p>
-        </div>
-      ) : (
-        <div className="nfts-grid">
-          {myNFTs.map((nft) => (
-            <div
-              key={nft.tokenId}
-              className="owned-card"
-            >
-              <img
-                src={nft.image}
-                alt={nft.name}
-              />
-
-              <h3>{nft.name}</h3>
-
-              <p>
-                Price: {nft.price} ETH
-              </p>
-
-              <p>
-                {nft.description}
-              </p>
-
-              <p>
-                Token #{nft.tokenId}
-              </p>
-
-              {nft.listed ? (
-                <button>
-                  Listed For Sale (
-                  {nft.listedPrice} ETH)
-                </button>
-              ) : (
-                <button
-                  onClick={() =>
-                    listNFTForSale(
-                      nft.tokenId
-                    )
-                  }
-                >
-                  List For Sale
-                </button>
-              )}
-            </div>
+        <div style={{ textAlign: "center", padding: "2rem" }}>Loading Grid...</div>
+      ) : myNfts && myNfts.length > 0 ? (
+        <div className="nft-grid">
+          {myNfts.map((nft, index) => (
+            <NFTCard key={nft.id || index} nft={nft} />
           ))}
         </div>
+      ) : (
+        /* Empty State Box matching Image 2 */
+        <div style={{
+          maxWidth: "600px",
+          margin: "2rem auto",
+          padding: "4rem 2rem",
+          textAlign: "center",
+          background: "#ffffff",
+          border: "1px solid #e2e8f0",
+          borderRadius: "16px",
+          boxShadow: "0 4px 12px rgba(0, 0, 0, 0.02)"
+        }}>
+          <div style={{ fontSize: "3.5rem", marginBottom: "1rem" }}>🎨</div>
+          <h2 style={{ fontSize: "1.5rem", fontWeight: "700", color: "#0f172a", marginBottom: "0.5rem" }}>
+            No NFTs Owned Yet
+          </h2>
+          <p style={{ color: "#64748b", fontSize: "0.95rem", maxWidth: "400px", margin: "0 auto" }}>
+            You haven't minted or purchased any NFTs yet. Head over to the Mint page to create your first digital collectible!
+          </p>
+        </div>
       )}
+
     </div>
   );
 }
-
-export default MyNFTs;

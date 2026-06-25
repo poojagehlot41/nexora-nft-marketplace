@@ -1,60 +1,41 @@
-import { Link } from "react-router-dom";
+import React from "react";
+import { Link, useLocation } from "react-router-dom";
 
-function Navbar({
-  walletAddress,
-  connectWallet,
-  disconnectWallet,
-}) {
+export default function Navbar({ walletAddress, connectWallet, disconnectWallet }) {
+  const location = useLocation();
+
   return (
-    <nav className="navbar">
-      <h2>
-        Nexora NFT
-        <br />
-        <span
-          style={{
-            fontSize: "14px",
-            color: "#a5b4fc",
-          }}
-        >
-          Powered by EtherAuthority
-        </span>
-      </h2>
-
-      <div className="nav-links">
-        <Link to="/">Home</Link>
-        <Link to="/mint">
-          Mint NFT
-        </Link>
-        <Link to="/my-nfts">
-          My NFTs
-        </Link>
+    <nav className="navbar-premium-panel">
+      {/* Left Column: Brand */}
+      <div className="nav-brand-section">
+        <span className="nav-logo-text">Nexora NFT</span>
+        <span className="nav-sub-text">Powered by EtherAuthority</span>
       </div>
 
-      {walletAddress ? (
-        <div className="wallet-box">
-          <button className="connect-btn">
-            {walletAddress.slice(0, 6)}
-            ...
-            {walletAddress.slice(-4)}
-          </button>
+      {/* Center Column: Navigation Links */}
+      <div className="nav-links-center-pane">
+        <Link to="/" className={location.pathname === "/" ? "link-active" : ""}>Home</Link>
+        <Link to="/mint" className={location.pathname === "/mint" ? "link-active" : ""}>Mint NFT</Link>
+        <Link to="/my-nfts" className={location.pathname === "/my-nfts" ? "link-active" : ""}>My NFTs</Link>
+      </div>
 
-          <button
-            className="disconnect-btn"
-            onClick={disconnectWallet}
-          >
-            Disconnect
+      {/* Right Column: Wallet Actions */}
+      <div className="nav-wallet-right-pane">
+        {walletAddress ? (
+          <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+            <span className="wallet-badge-style">
+              {walletAddress.substring(0, 6)}...{walletAddress.substring(38)}
+            </span>
+            <button className="btn-disconnect" onClick={disconnectWallet}>
+              Disconnect
+            </button>
+          </div>
+        ) : (
+          <button className="btn-connect" onClick={connectWallet}>
+            Connect Wallet
           </button>
-        </div>
-      ) : (
-        <button
-          className="connect-btn"
-          onClick={connectWallet}
-        >
-          Connect Wallet
-        </button>
-      )}
+        )}
+      </div>
     </nav>
   );
 }
-
-export default Navbar;

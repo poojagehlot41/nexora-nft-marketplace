@@ -1,250 +1,52 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
+import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.0/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
+import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.9.0/contracts/access/Ownable.sol";
 
-contract NFTMarketplace is ERC721URIStorage {
+contract NexoraNFTMarketplace is ERC721URIStorage, Ownable {
+    uint256 private _tokenIds;
 
-    uint256 public tokenCounter;
-    uint256 public totalListings;
-
-    struct Listing {
-        uint256 tokenId;
-        address seller;
+    struct MarketItem {
+        uint256 itemId;
+        address payable seller;
+        address payable owner;
         uint256 price;
-        bool sold;
+        bool listed;
     }
 
-    mapping(uint256 => Listing) public listings;
+    mapping(uint256 => MarketItem) private marketItems;
+    uint256 public constant MINT_FEE = 0.01 ether;
 
-    event NFTMinted(
-        address indexed owner,
-        uint256 indexed tokenId,
-        string tokenURI
-    );
-
-    event NFTListed(
-        uint256 indexed tokenId,
-        address indexed seller,
-        uint256 price
-    );
-
-    event NFTSold(
-        uint256 indexed tokenId,
-        address indexed buyer,
-        uint256 price
-    );
-
-    event NFTListingCancelled(
-        uint256 indexed tokenId,
-        address indexed seller
-    );
-
-    event NFTPriceUpdated(
-        uint256 indexed tokenId,
-        uint256 newPrice
-    );
-
-    constructor() ERC721("NexoraNFT", "NEX") {
-        tokenCounter = 1;
+    // Explicitly initializing constructor safely
+    constructor() ERC721("Nexora NFT", "NEX") {
+        // Owner is auto-set to msg.sender in OpenZeppelin v4.9.0
     }
 
-    function totalNFTsMinted()
+    function mintNFT(string memory tokenURI)
         public
-        view
-        returns(uint256)
+        payable
+        returns (uint256)
     {
-        return tokenCounter - 1;
-    }
+        require(msg.value >= MINT_FEE, "Minimum mint fee (0.01 ether) required");
+        _tokenIds += 1; 
+        uint256 newItemId = _tokenIds;
+        
+        _mint(msg.sender, newItemId);
+        _setTokenURI(newItemId, tokenURI);
 
-    function mintNFT(string memory tokenURI) public {
-
-        require(
-            bytes(tokenURI).length > 0,
-            "Token URI cannot be empty"
-        );
-
-        uint256 currentTokenId = tokenCounter;
-
-        _safeMint(msg.sender, currentTokenId);
-
-        _setTokenURI(currentTokenId, tokenURI);
-
-        emit NFTMinted(
-            msg.sender,
-            currentTokenId,
-            tokenURI
-        );
-
-        tokenCounter++;
-    }
-
-    function listNFT(
-        uint256 tokenId,
-        uint256 price
-    ) public {
-
-        require(
-            ownerOf(tokenId) == msg.sender,
-            "You are not the owner"
-        );
-
-        require(
-            price > 0,
-            "Price must be greater than zero"
-        );
-
-        require(
-            listings[tokenId].seller == address(0),
-            "NFT already listed"
-        );
-
-        require(
-            !listings[tokenId].sold,
-            "NFT already sold"
-        );
-
-        listings[tokenId] = Listing(
-            tokenId,
-            msg.sender,
-            price,
+        marketItems[newItemId] = MarketItem(
+            newItemId,
+            payable(address(0)),
+            payable(msg.sender),
+            0,
             false
         );
 
-        totalListings++;
-
-        emit NFTListed(
-            tokenId,
-            msg.sender,
-            price
-        );
+        return newItemId;
     }
 
-    function buyNFT(
-        uint256 tokenId
-    ) public payable {
-
-        Listing storage listing = listings[tokenId];
-
-        require(
-            listing.seller != address(0),
-            "NFT not listed"
-        );
-
-        require(
-            !listing.sold,
-            "NFT already sold"
-        );
-
-        require(
-            msg.value == listing.price,
-            "Send exact price"
-        );
-
-        require(
-            ownerOf(tokenId) == listing.seller,
-            "Seller no longer owns NFT"
-        );
-
-        require(
-            msg.sender != listing.seller,
-            "Seller cannot buy own NFT"
-        );
-
-        payable(listing.seller).transfer(
-            listing.price
-        );
-
-        _safeTransfer(
-            listing.seller,
-            msg.sender,
-            tokenId,
-            ""
-        );
-
-        listing.sold = true;
-
-        totalListings--;
-
-        emit NFTSold(
-            tokenId,
-            msg.sender,
-            listing.price
-        );
-    }
-
-    function cancelListing(
-        uint256 tokenId
-    ) public {
-
-        require(
-            listings[tokenId].seller == msg.sender,
-            "Not seller"
-        );
-
-        require(
-            !listings[tokenId].sold,
-            "Already sold"
-        );
-
-        totalListings--;
-
-        delete listings[tokenId];
-
-        emit NFTListingCancelled(
-            tokenId,
-            msg.sender
-        );
-    }
-
-    function updateListingPrice(
-        uint256 tokenId,
-        uint256 newPrice
-    ) public {
-
-        require(
-            listings[tokenId].seller == msg.sender,
-            "Not seller"
-        );
-
-        require(
-            !listings[tokenId].sold,
-            "Already sold"
-        );
-
-        require(
-            newPrice > 0,
-            "Invalid price"
-        );
-
-        listings[tokenId].price = newPrice;
-
-        emit NFTPriceUpdated(
-            tokenId,
-            newPrice
-        );
-    }
-
-    function getListing(
-        uint256 tokenId
-    )
-        public
-        view
-        returns (
-            uint256,
-            address,
-            uint256,
-            bool
-        )
-    {
-        Listing memory listing =
-            listings[tokenId];
-
-        return (
-            listing.tokenId,
-            listing.seller,
-            listing.price,
-            listing.sold
-        );
+    function getMarketItem(uint256 tokenId) public view returns (MarketItem memory) {
+        return marketItems[tokenId];
     }
 }

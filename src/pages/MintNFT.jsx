@@ -1,168 +1,90 @@
-import { useState } from "react";
-import { ethers } from "ethers";
-import { CONTRACT_ADDRESS } from "../utils/constants";
-import { CONTRACT_ABI } from "../utils/contractABI";
+import React, { useState } from "react";
 
-function MintNFT() {
-  const [name, setName] = useState("");
-  const [image, setImage] = useState("");
-  const [price, setPrice] = useState("");
-  const [description, setDescription] =
-    useState("");
+export default function MintNFT(props) {
+  const [form, setForm] = useState({
+    name: "",
+    image: "",
+    price: "",
+    description: "",
+  });
 
-  const [loading, setLoading] =
-    useState(false);
-
-  const mintNFT = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (!window.ethereum) {
-      alert("Please install MetaMask.");
-      return;
-    }
-
-    if (
-      !name ||
-      !image ||
-      !price ||
-      !description
-    ) {
-      alert("Please fill all fields.");
+    
+    if (!form.name || !form.image || !form.price || !form.description) {
+      alert("Please fill all fields before minting!");
       return;
     }
 
     try {
-      setLoading(true);
+      const mintFunction = props.mintNFT || props.createNFT || props.mintToken;
 
-      const provider =
-        new ethers.BrowserProvider(
-          window.ethereum
-        );
-
-      const network =
-        await provider.getNetwork();
-
-     const chainId =
-    Number(network.chainId);
-
-    if (
-      chainId !== 11155111 &&
-      chainId !== 34
-     ){
-   alert(
-      "Please switch MetaMask to Sepolia or SCAI Mainnet."
-    );
-
-    setLoading(false);
-    return;
-    }
-
-      const signer =
-        await provider.getSigner();
-
-      const contract =
-        new ethers.Contract(
-          CONTRACT_ADDRESS,
-          CONTRACT_ABI,
-          signer
-        );
-
-     const metadata = {
-        name,
-        image,
-        description,
-        price:
-      String(price),
-     };
-
-      const tokenURI =
-        JSON.stringify(metadata);
-
-      alert(
-        "Confirm transaction in MetaMask."
-      );
-
-      const tx =
-        await contract.mintNFT(
-          tokenURI
-        );
-
-      await tx.wait();
-
-      alert(
-        `NFT Minted Successfully 🚀
-         Token has been added to blockchain.`
-      );
-
-      setName("");
-      setImage("");
-      setPrice("");
-      setDescription("");
+      if (typeof mintFunction === "function") {
+        await mintFunction(form.name, form.image, form.price, form.description);
+      } else {
+        console.log("Form Data:", form);
+        alert("Data logged to console!");
+      }
+      
+      setForm({ name: "", image: "", price: "", description: "" });
     } catch (error) {
-      console.log(error);
-      alert( "Mint failed. Please check wallet connection and network.");
+      console.error("Error while minting:", error);
     }
-
-    setLoading(false);
   };
 
   return (
-    <div className="mint-container">
-      <h1>Mint New NFT</h1>
+    <div className="container" style={{ maxWidth: "650px", margin: "4rem auto", padding: "0 1rem" }}>
+      
+      <h1 style={{ textBreak: "word", textAlign: "center", fontSize: "2.5rem", fontWeight: "800", color: "#0f172a", marginBottom: "2.5rem" }}>
+        Mint New NFT
+      </h1>
 
-      <form
-        className="mint-form"
-        onSubmit={mintNFT}
-      >
+      <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+        
         <input
           type="text"
           placeholder="NFT Name"
-          value={name}
-          onChange={(e) =>
-            setName(e.target.value)
-          }
+          value={form.name}
+          onChange={(e) => setForm({ ...form, name: e.target.value })}
+          className="search-input"
+          style={{ width: "100%", padding: "1rem" }}
         />
 
         <input
           type="text"
           placeholder="NFT Image URL"
-          value={image}
-          onChange={(e) =>
-            setImage(e.target.value)
-          }
+          value={form.image}
+          onChange={(e) => setForm({ ...form, image: e.target.value })}
+          className="search-input"
+          style={{ width: "100%", padding: "1rem" }}
         />
 
         <input
-          type="number"
+          type="text"
           placeholder="Price in SCAI"
-          value={price}
-          onChange={(e) =>
-            setPrice(e.target.value)
-          }
+          value={form.price}
+          onChange={(e) => setForm({ ...form, price: e.target.value })}
+          className="search-input"
+          style={{ width: "100%", padding: "1rem" }}
         />
 
         <textarea
-          rows="5"
           placeholder="NFT Description"
-          value={description}
-          onChange={(e) =>
-            setDescription(
-              e.target.value
-            )
-          }
-        ></textarea>
+          rows="5"
+          value={form.description}
+          onChange={(e) => setForm({ ...form, description: e.target.value })}
+          className="search-input"
+          style={{ width: "100%", padding: "1rem", fontFamily: "inherit", resize: "vertical" }}
+        />
 
         <button
           type="submit"
-          disabled={loading}
+          className="btn"
+          style={{ width: "100%", padding: "1rem", fontSize: "1.1rem" }}
         >
-          {loading
-            ? "Minting NFT..."
-            : "Mint NFT 🚀"}
+          Mint NFT 🚀
         </button>
       </form>
     </div>
   );
 }
-
-export default MintNFT;

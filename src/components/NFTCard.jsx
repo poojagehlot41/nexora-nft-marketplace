@@ -1,149 +1,39 @@
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { ethers } from "ethers";
-import { CONTRACT_ADDRESS } from "../utils/constants";
-import { CONTRACT_ABI } from "../utils/contractABI";
+import React from "react";
 
-function NFTCard({ nft }) {
-  const navigate = useNavigate();
-  const [liked, setLiked] =
-    useState(false);
-
-  const [buying, setBuying] =
-    useState(false);
-
-  const buyNFT = async (e) => {
-    e.stopPropagation();
-
-    try {
-      if (
-        !window.ethereum ||
-        !nft.tokenId
-      ) {
-        return;
-      }
-
-      setBuying(true);
-
-      const provider =
-        new ethers.BrowserProvider(
-          window.ethereum
-        );
-
-      const signer =
-        await provider.getSigner();
-
-      const contract =
-        new ethers.Contract(
-          CONTRACT_ADDRESS,
-          CONTRACT_ABI,
-          signer
-        );
-
-      const price =
-        ethers.parseEther(
-          nft.price.toString()
-        );
-
-      alert(
-        "Confirm transaction in MetaMask."
-      );
-
-      const tx =
-        await contract.buyNFT(
-          nft.tokenId,
-          {
-            value: price,
-          }
-        );
-
-      await tx.wait();
-
-      alert(
-      `NFT Purchased Successfully 🚀
-       NFT ownership transferred to your wallet.`
-      );
-
-      window.location.reload();
-    } catch (error) {
-      console.log(error);
-      alert("Purchase Failed. Please check wallet balance and network.");
-    }
-
-    setBuying(false);
-  };
+export default function NFTCard({ nft }) {
+  // Safe check taaki agar koi data galat aaye toh card crash na ho
+  if (!nft) return null;
 
   return (
-    <div
-      className="nft-card"
-      onClick={() =>
-        navigate(
-          `/nft-details/${
-            nft.id ||
-            nft.tokenId
-          }`
-        )
-      }
-    >
-      <div
-        className="heart"
-        onClick={(e) => {
-          e.stopPropagation();
-          setLiked(!liked);
-        }}
-      >
-        {liked ? "❤️" : "🤍"}
+    <div className="nft-card">
+      <div className="nft-img-container">
+        <img 
+          src={nft.image || "https://via.placeholder.com/400"} 
+          alt={nft.name || "NFT Image"} 
+        />
       </div>
-
-      <img
-        src={nft.image}
-        alt={nft.name}
-      />
-
-      <div className="card-content">
-        <h3>{nft.name}</h3>
-
-        <p className="creator">
-          Creator:
-          {" "}
-          {nft.creator ||
-            "Unknown"}
+      
+      <div className="nft-details">
+        <h3 className="nft-title">{nft.name || "Unnamed NFT"}</h3>
+        <p style={{ fontSize: "0.85rem", color: "#64748b", margin: "2px 0" }}>
+          Creator: <span style={{ fontFamily: "monospace" }}>
+            {nft.creator ? `${nft.creator.substring(0, 6)}...${nft.creator.substring(38)}` : "0x00...000"}
+          </span>
         </p>
-
-        <p className="creator">
-          Category:
-          {" "}
-          {nft.category ||
-            "NFT"}
+        <p className="nft-description">
+          {nft.description || "No description provided for this unique artifact."}
         </p>
-
-        <p className="price">
-          {nft.price}
-          {!String(nft.price).includes("ETH")
-          ? " ETH"
-          : ""}
-       </p>
-
-        {nft.tokenId ? (
-          <button
-            className="buy-btn"
-            onClick={buyNFT}
-            disabled={buying}
-          >
-            {buying
-              ? "Buying..."
-              : "Buy NFT 🚀"}
+        
+        <div className="nft-meta">
+          <div className="price-box">
+            <span className="price-label">Price</span>
+            <span className="price-tag">{nft.price || "0"} SCAI</span>
+          </div>
+          <button className="btn" style={{ padding: "0.4rem 1rem", fontSize: "0.85rem" }}>
+            Buy Now
           </button>
-        ) : (
-          <button
-            className="buy-btn"
-          >
-            Buy NFT 🚀
-          </button>
-        )}
+        </div>
       </div>
     </div>
   );
 }
-
-export default NFTCard;

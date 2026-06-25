@@ -1,4 +1,15 @@
-/* ---------- GLOBAL ---------- */
+/* --- Global Design System --- */
+:root {
+  --bg-main: #f8fafc;
+  --bg-card: #ffffff;
+  --primary: #4f46e5;
+  --primary-hover: #4338ca;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --border-color: #e2e8f0;
+  --radius-lg: 16px;
+  --radius-md: 12px;
+}
 
 * {
   margin: 0;
@@ -7,433 +18,323 @@
 }
 
 body {
-  font-family: Arial, sans-serif;
-  background: #f5f7fb;
-  color: #111827;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: var(--bg-main);
+  color: var(--text-main);
 }
 
-/* ---------- NAVBAR ---------- */
-
-.navbar {
+/* Master Sticky Layout System */
+.page-wrapper {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  width: 100%;
+}
+
+.container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+/* --- Premium Top Navbar Bar --- */
+.navbar-premium-panel {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  padding: 20px 60px;
-  background: #111827;
+  padding: 1.25rem 3rem;
+  background-color: #0f172a; 
+  color: #ffffff;
+  border-bottom: 1px solid #1e293b;
+  width: 100%;
 }
 
-.navbar h2 {
-  color: white;
+.nav-brand-section {
+  justify-self: start;
 }
 
-.nav-links {
+.nav-logo-text {
+  font-size: 1.5rem;
+  font-weight: 700;
+  display: block;
+  color: #ffffff;
+}
+
+.nav-sub-text {
+  font-size: 0.8rem;
+  color: #818cf8;
+}
+
+.nav-links-center-pane {
   display: flex;
-  gap: 20px;
+  gap: 2.5rem;
+  justify-content: center;
 }
 
-.nav-links a {
-  color: white;
+.nav-links-center-pane a {
+  color: #94a3b8;
   text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
 }
 
-.connect-btn {
-  background: #4f46e5;
-  color: white;
+.nav-links-center-pane a:hover, 
+.nav-links-center-pane a.link-active {
+  color: #ffffff;
+}
+
+.nav-wallet-right-pane {
+  justify-self: end;
+}
+
+.btn-connect {
+  background-color: var(--primary);
+  color: #ffffff;
   border: none;
-  padding: 10px 20px;
+  padding: 0.6rem 1.4rem;
   border-radius: 8px;
+  font-weight: 600;
   cursor: pointer;
 }
 
-.connect-btn:hover {
-  background: #4338ca;
-}
-
-.wallet-box {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-
-.disconnect-btn {
-  padding: 10px 15px;
-  border: none;
-  border-radius: 10px;
+.btn-disconnect {
+  background-color: transparent;
+  color: #ffffff;
+  border: 1px solid #334155;
+  padding: 0.6rem 1.4rem;
+  border-radius: 8px;
+  font-weight: 600;
   cursor: pointer;
 }
 
-/* ---------- HERO ---------- */
+.btn-disconnect:hover {
+  background-color: #1e293b;
+}
 
+.wallet-badge-style {
+  background-color: #4f46e5;
+  color: #ffffff;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  font-family: monospace;
+}
+
+/* --- Hero Section & Stats Layout --- */
 .hero {
   text-align: center;
-  padding: 120px 20px;
-  background: linear-gradient(
-    135deg,
-    #f5f7fb,
-    #eef2ff
-  );
+  padding: 5rem 1rem 3rem 1rem;
 }
 
 .hero h1 {
-  font-size: 55px;
-  margin-bottom: 20px;
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 1.5rem;
 }
 
 .hero p {
-  font-size: 20px;
-  color: gray;
-  margin-bottom: 30px;
+  color: var(--text-muted);
+  font-size: 1.2rem;
+  max-width: 700px;
+  margin: 0 auto 2rem auto;
 }
 
-.explore-btn {
-  background: #4f46e5;
+.btn {
+  background-color: var(--primary);
   color: white;
   border: none;
-  padding: 15px 30px;
-  border-radius: 10px;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
   cursor: pointer;
-  font-size: 16px;
+  display: inline-block;
 }
 
-.explore-btn:hover {
-  background: #4338ca;
-}
-
-/* ---------- STATS ---------- */
-
-.stats-section {
+.stats-container {
   display: flex;
   justify-content: center;
-  gap: 40px;
-  margin-bottom: 60px;
-  flex-wrap: wrap;
+  gap: 2rem;
+  margin: 2rem auto 4rem auto;
 }
 
 .stat-box {
-  background: white;
-  padding: 25px;
-  border-radius: 15px;
-  min-width: 180px;
+  background: var(--bg-card);
+  padding: 1.5rem 2.5rem;
+  border-radius: var(--radius-md);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--border-color);
   text-align: center;
-  box-shadow: 0 0 15px rgba(0,0,0,0.08);
+  min-width: 160px;
 }
 
-/* ---------- SEARCH ---------- */
-
-.search-section {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 25px;
+.stat-box h3 {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #0f172a;
 }
 
-.search-section input {
-  width: 400px;
-  padding: 15px;
+.stat-box p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+/* Controls */
+.search-container {
+  max-width: 550px;
+  margin: 0 auto 1.5rem auto;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.8rem 1.2rem;
+  border: 1px solid var(--border-color);
   border-radius: 10px;
-  border: 1px solid #ddd;
+  outline: none;
 }
 
-/* ---------- CATEGORY ---------- */
-
-.category-section {
+/* --- Image 2 Style Category Tabs --- */
+.filter-tabs {
   display: flex;
   justify-content: center;
-  gap: 15px;
-  margin-bottom: 40px;
-  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-bottom: 3rem;
 }
 
-.category-section button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 20px;
-  background: #4f46e5;
-  color: white;
+.tab-btn {
+  background: #ffffff;
+  color: #0f172a;
+  border: 1px solid #e2e8f0;
+  padding: 0.6rem 1.6rem;
+  border-radius: 24px;
+  font-weight: 500;
+  font-size: 0.95rem;
   cursor: pointer;
+  transition: all 0.2s ease;
 }
 
-/* ---------- TITLES ---------- */
+.tab-btn:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
 
-.section-title {
+.tab-btn.active-tab {
+  background: #4f46e5;
+  color: #ffffff;
+  border-color: #4f46e5;
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
+}
+
+.heading-trending {
   text-align: center;
-  margin-bottom: 30px;
-  font-size: 32px;
+  font-size: 2.4rem;
+  font-weight: 800;
+  margin-bottom: 3rem;
 }
 
-/* ---------- NFT CARDS ---------- */
-
-.cards-section {
-  display: flex;
-  justify-content: center;
-  gap: 30px;
-  flex-wrap: wrap;
-  padding: 20px;
-  margin-bottom: 80px;
-}
-
-.nft-card,
-.owned-card {
-  width: 300px;
-  padding: 15px;
-  border-radius: 15px;
-  background: white;
-  box-shadow: 0 0 15px rgba(0,0,0,0.1);
-  transition: 0.3s;
+/* --- NFT Cards Grid & Hover System --- */
+.nft-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  max-width: 1240px;
+  margin: 0 auto;
 }
 
 .nft-card {
-  cursor: pointer;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  position: relative;
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease;
 }
 
-.nft-card:hover,
-.owned-card:hover {
-  transform: translateY(-10px);
+.nft-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
 }
 
-.nft-card img,
-.owned-card img {
+.nft-img-container {
+  position: relative;
   width: 100%;
-  border-radius: 10px;
 }
 
-.nft-card img {
-  height: 250px;
+.nft-img-container img {
+  width: 100%;
+  height: 280px;
   object-fit: cover;
 }
 
-.card-content {
-  padding-top: 15px;
-}
-
-.nft-card h3,
-.owned-card h3 {
-  margin-top: 15px;
-}
-
-.creator {
-  color: gray;
-  margin-top: 8px;
-}
-
-.price {
-  font-weight: bold;
-  margin-top: 10px;
-  color: #4f46e5;
-}
-
-.buy-btn,
-.owned-card button {
-  margin-top: 12px;
-  width: 100%;
-  padding: 12px;
+.like-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(4px);
   border: none;
-  border-radius: 8px;
-  background: #4f46e5;
-  color: white;
-  cursor: pointer;
-}
-
-.buy-btn:hover,
-.owned-card button:hover {
-  background: #4338ca;
-}
-
-/* ---------- HEART ---------- */
-
-.heart {
-  font-size: 24px;
-  cursor: pointer;
-  text-align: right;
-  padding: 10px;
-}
-
-.heart:hover {
-  transform: scale(1.1);
-}
-
-/* ---------- MINT PAGE ---------- */
-
-.mint-container {
-  max-width: 700px;
-  margin: 50px auto;
-  padding: 30px;
-}
-
-.mint-container h1 {
-  text-align: center;
-  margin-bottom: 30px;
-}
-
-.mint-form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.mint-form input,
-.mint-form textarea {
-  padding: 15px;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  font-size: 16px;
-}
-
-.mint-form button {
-  background: #4f46e5;
-  color: white;
-  border: none;
-  padding: 15px;
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-.mint-form button:hover {
-  background: #4338ca;
-}
-
-.mint-form button:disabled,
-.buy-btn:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
-}
-
-/* ---------- MY NFTS ---------- */
-
-.mynfts-container {
-  padding: 50px;
-}
-
-.mynfts-container h1 {
-  text-align: center;
-  margin-bottom: 40px;
-}
-
-.nfts-grid {
-  display: flex;
-  justify-content: center;
-  gap: 30px;
-  flex-wrap: wrap;
-}
-
-/* ---------- EMPTY STATE ---------- */
-
-.empty-box {
-  text-align: center;
-  padding: 80px 20px;
-}
-
-.empty-box p {
-  margin-top: 15px;
-  color: gray;
-}
-
-/* ---------- NFT DETAILS ---------- */
-
-.details-container {
-  max-width: 1100px;
-  margin: 60px auto;
-  display: flex;
-  gap: 40px;
-  flex-wrap: wrap;
-  padding: 20px;
-}
-
-.details-image {
-  width: 450px;
-  border-radius: 20px;
-}
-
-.details-content {
-  flex: 1;
-}
-
-.details-content h1,
-.details-content h2,
-.details-content h3,
-.details-content p {
-  margin-bottom: 20px;
-}
-
-/* ---------- LOADER ---------- */
-
-.loader {
-  width: 50px;
-  height: 50px;
-  border: 5px solid #ddd;
-  border-top: 5px solid #4f46e5;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin: 60px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+  z-index: 10;
 }
 
-@keyframes spin {
-  100% {
-    transform: rotate(360deg);
-  }
+.like-btn:hover {
+  transform: scale(1.1);
+  background: #ffffff;
 }
 
-/* ---------- FOOTER ---------- */
+.nft-details {
+  padding: 1.5rem;
+}
 
-.footer {
-  margin-top: 80px;
-  padding: 30px;
+.nft-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.price-tag {
+  color: var(--primary);
+  font-weight: 700;
+}
+
+/* --- Dark Centered Footer System --- */
+.footer-dark-panel-style {
+  background-color: #0f172a; 
+  border-top: 1px solid #1e293b;
+  color: #ffffff;
+  padding: 2.5rem 1rem;
+  width: 100%;
   text-align: center;
-  background: #111827;
-  color: white;
+  margin-top: auto;
 }
 
-/* ---------- RESPONSIVE ---------- */
+.footer-inner-content {
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
 
-@media (max-width: 768px) {
-  .navbar {
-    flex-direction: column;
-    gap: 15px;
-    padding: 20px;
-  }
+.footer-inner-content strong {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #ffffff;
+}
 
-  .nav-links {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .wallet-box {
-    flex-direction: column;
-  }
-
-  .hero {
-    padding: 80px 20px;
-  }
-
-  .hero h1 {
-    font-size: 36px;
-  }
-
-  .hero p {
-    font-size: 18px;
-  }
-
-  .cards-section,
-  .nfts-grid {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .nft-card,
-  .owned-card {
-    width: 90%;
-    max-width: 350px;
-  }
-
-  .search-section input {
-    width: 90%;
-  }
-
-  .details-container {
-    flex-direction: column;
-  }
-
-  .details-image {
-    width: 100%;
-  }
+.footer-inner-content span {
+  color: #cbd5e1;
 }

@@ -12,7 +12,6 @@ export const CONTRACT_ABI = [
     stateMutability: "nonpayable",
     type: "function",
   },
-
   {
     inputs: [],
     name: "totalNFTsMinted",
@@ -26,7 +25,6 @@ export const CONTRACT_ABI = [
     stateMutability: "view",
     type: "function",
   },
-
   {
     inputs: [
       {
@@ -46,7 +44,6 @@ export const CONTRACT_ABI = [
     stateMutability: "view",
     type: "function",
   },
-
   {
     inputs: [
       {
@@ -66,7 +63,6 @@ export const CONTRACT_ABI = [
     stateMutability: "view",
     type: "function",
   },
-
   {
     inputs: [
       {
@@ -85,7 +81,6 @@ export const CONTRACT_ABI = [
     stateMutability: "nonpayable",
     type: "function",
   },
-
   {
     inputs: [
       {
@@ -120,7 +115,6 @@ export const CONTRACT_ABI = [
     stateMutability: "view",
     type: "function",
   },
-
   {
     inputs: [
       {
