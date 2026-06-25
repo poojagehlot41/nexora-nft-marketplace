@@ -134,7 +134,7 @@ function MintNFT() {
 
         <input
           type="number"
-          placeholder="Price in ETH"
+          placeholder="Price in SCAI"
           value={price}
           onChange={(e) =>
             setPrice(e.target.value)
